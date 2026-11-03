@@ -10,7 +10,7 @@
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
   html,body{margin:0;height:100%;overflow:hidden;background:#07070a;color:#fff;
     font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;user-select:none}
-  canvas{display:block;position:fixed;inset:0}
+  canvas{display:block;position:fixed;inset:0;touch-action:none;overscroll-behavior:none}
   .hidden{display:none !important}
   button{font-family:inherit}
 
@@ -114,6 +114,43 @@
   #flash.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
   #flash b{color:#8ef0a4}
 
+  .somob{display:none}
+  @media (max-width:700px){ .sodesk{display:none} .somob{display:inline} }
+
+  /* ---------- controles de câmera ---------- */
+  #camctl{position:fixed;z-index:25;right:12px;bottom:150px;display:flex;flex-direction:column;gap:8px;
+    pointer-events:auto}
+  #camctl .iconbtn{width:42px;height:42px;font-size:17px;font-weight:800;
+    background:rgba(14,14,19,.86);box-shadow:0 6px 18px rgba(0,0,0,.4)}
+
+  /* ---------- celular: HUD compacto ---------- */
+  @media (max-width:700px){
+    #topbar{padding:10px 8px;gap:6px;align-items:center}
+    .brand .tile{width:26px;height:20px}
+    .brand .tile i:nth-child(1){width:22px;height:4px}
+    .brand .tile i:nth-child(2){width:17px;height:4px;bottom:5px}
+    .brand .tile i:nth-child(3){width:12px;height:4px;bottom:10px}
+    .brand .tile i:nth-child(4){width:8px;height:4px;bottom:15px}
+    .brand .tile i:nth-child(5){width:4px;height:4px;bottom:20px}
+    .brand{gap:6px}
+    .brand .txt{display:none}            /* no celular fica só o ícone da torre */
+    #status{font-size:11px;padding:6px 8px;gap:5px}
+    #status .sep{height:11px}
+    #status .mini{font-size:9.5px}
+    .tools{gap:5px}
+    .iconbtn{width:33px;height:33px;border-radius:9px;font-size:13px}
+    #homeNav{top:48px}
+    #camctl{bottom:150px;right:10px}
+    #camctl .iconbtn{width:38px;height:38px;font-size:15px}
+    #tooltip{display:none}       /* no toque a dica flutuante atrapalha */
+  }
+  @media (max-width:400px){
+    #status{font-size:10px;padding:5px 7px;gap:4px}
+    #status .mini{display:none}
+    .tools{gap:4px}
+    .iconbtn{width:29px;height:29px;font-size:12px}
+  }
+
   /* ---------- seletor de jogos (topo) ---------- */
   /* botão único de volta ao site (sem trocar de jogo por aqui) */
   #homeNav{position:fixed;z-index:26;top:64px;left:50%;transform:translateX(-50%);
@@ -159,6 +196,12 @@
       <button class="iconbtn" id="btnHelp" title="Regras (R)">?</button>
       <button class="iconbtn" id="btnRestart" title="Reiniciar (N)">⟳</button>
     </div>
+  </div>
+
+  <div id="camctl" aria-label="Controles de câmera">
+    <button class="iconbtn" id="btnZoomIn" title="Aproximar (+)" aria-label="Aproximar">＋</button>
+    <button class="iconbtn" id="btnZoomOut" title="Afastar (−)" aria-label="Afastar">－</button>
+    <button class="iconbtn" id="btnRecenter" title="Recentralizar a mesa (0)" aria-label="Recentralizar">⌖</button>
   </div>
 
   <div id="bottom">
@@ -219,7 +262,8 @@
       <a class="btn ghost" href="index.html" style="text-decoration:none;line-height:1.4">← Menu</a>
     </div>
     <div style="margin-top:12px;color:#7d8593;font-size:12px">
-      Arraste para girar a mesa · role para dar zoom
+      <span class="sodesk">Arraste para girar a mesa · role para dar zoom</span>
+      <span class="somob">Arraste com o dedo para girar · pinça ou os botões <b>＋ −</b> para o zoom · <b>⌖</b> recentraliza</span>
     </div>
   </div>
 </div>
@@ -239,5 +283,5 @@
 
 <script src="three.min.js"></script>
 <script src="hanoi.js"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a54f22f74cc62754',t:'MTc5Mzc0ODMwOQ=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a54f22f74cc62754',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
